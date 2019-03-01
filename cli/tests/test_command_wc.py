@@ -1,3 +1,4 @@
+import os
 from unittest import TestCase
 
 from src.commands import CommandWC
@@ -8,7 +9,7 @@ class TestCommandWC(TestCase):
     def test_execute(self):
         storage = Storage(r'\$[^ \'\"$]+')
 
-        command = CommandWC(['example.txt'])
+        command = CommandWC([os.path.dirname(__file__) + '/example.txt'])
         self.assertEqual(command.execute("", storage), "1 3 17")
 
         command = CommandWC([])

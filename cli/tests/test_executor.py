@@ -1,3 +1,4 @@
+import os
 from unittest import TestCase
 
 from src.storage import Storage
@@ -25,7 +26,8 @@ class TestExecutor(TestCase):
         self.assertEqual(executor.execute_expression('echo "Hello, world!"'),
                          'Hello, world!')
 
-        self.assertEqual(executor.execute_expression('FILE=example.txt'), '')
+        self.assertEqual(executor.execute_expression(
+            'FILE=' + os.path.dirname(__file__) + '/example.txt'), '')
 
         self.assertEqual(executor.execute_expression('cat $FILE'),
                          'Some example text')

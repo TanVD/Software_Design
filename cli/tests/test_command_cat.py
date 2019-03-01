@@ -1,3 +1,4 @@
+import os
 from unittest import TestCase
 
 from src.commands import CommandCat
@@ -8,7 +9,7 @@ class TestCommandCat(TestCase):
     def test_execute(self):
         storage = Storage(r'\$[^ \'\"$]+')
 
-        command = CommandCat(['example.txt'])
+        command = CommandCat([os.path.dirname(__file__) + '/example.txt'])
         self.assertEqual(command.execute("", storage), "Some example text")
 
         command = CommandCat(['dsakfjhakdsljf'])
