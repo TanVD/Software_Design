@@ -20,7 +20,7 @@ class TestExecutor(TestCase):
 
         executor = Executor(CommandInterpreterWithStorage
                             (storage, commands, TokenPipe, CommandDefault),
-                            Parser(token_types))
+                            Parser(token_types), storage)
 
         self.assertEqual(executor.execute_expression('echo "Hello, world!"'),
                          'Hello, world!')

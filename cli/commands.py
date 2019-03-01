@@ -1,11 +1,13 @@
 """
     Модуль с командами с которыми работает интерпретатор
 """
-
+import os
+import re
 from abc import ABCMeta, abstractmethod
 from typing import List
 from subprocess import run, PIPE
 from storage import IStorage
+import argparse
 
 
 class ICommand(metaclass=ABCMeta):
@@ -133,3 +135,60 @@ class CommandDefault(ICommand):
         process = run(self._args, stdout=PIPE, input=pipe,
                       shell=True, encoding="utf8", errors='ignore')
         return process.stdout
+
+
+class CommandGrep(ICommand):
+    """ Команда grep, ищет паттерн в файле или во входном потоке"""
+
+    @staticmethod
+    def name() -> str:
+        return "grep"
+
+    def execute(self, pipe: str, storage: IStorage) -> str:
+        parser = argparse.ArgumentParser(
+            description='Search for PATTERN in each FILE')
+
+        parser.add_argument("-i", "--ignore-case", action="store_true",
+                            help="ignore case distinctions")
+        parser.add_argument("-w", "--word-regexp", action="store_true",
+                            help="force PATTERN to match only whole words")
+        parser.add_argument("-A", "--after-context", type=int,
+                            help="print NUM lines of output context")
+        parser.add_argument("PATTERN",
+                            help="PATTERN is an extended regular expression")
+        parser.add_argument('FILE', nargs='*',
+                            help='FILE is path to file for search')
+
+        try:
+            args = parser.parse_args(self._args)
+            pattern = args.PATTERN
+            result = ""
+
+            if args.word_regexp:
+                pattern = r"\b" + pattern + r"\b"
+
+            if args.FILE:
+                pipe = ""
+                for filename in args.FILE:
+                    try:
+                        with open(filename, encoding="utf8") as f:
+                            pipe += f.read() + '\n'
+                    except IOError as error:
+                        result += "grep: '%s' No such file or directory\n" % filename
+
+            after_lines_count = 0
+            for line in pipe.splitlines(True):
+                if re.findall(pattern, line,
+                              flags=re.IGNORECASE if args.ignore_case else 0):
+                    after_lines_count = args.after_context if args.after_context else 0
+                    result += line
+                elif after_lines_count > 0:
+                    result += line
+                    after_lines_count -= 1
+
+            return result[:-1]
+
+        except SystemExit:
+            pass
+
+        return ""

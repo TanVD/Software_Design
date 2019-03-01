@@ -11,7 +11,7 @@ import os
 from subprocess import run, PIPE
 from storage import Storage
 from commands import CommandCat, CommandEcho, CommandWC, CommandPwd, \
-    CommandExit, CommandDefault
+    CommandExit, CommandDefault, CommandGrep
 from tokens import TokenInSingleQuotes, TokenInDoubleQuotes, TokenPipe, \
     TokenAssignment, TokenWord
 from interpreter import CommandInterpreterWithStorage
@@ -29,7 +29,7 @@ def main_loop():
 
     storage = Storage(r'\$[^ \'\"$]+')
     commands = [CommandCat, CommandEcho, CommandWC,
-                CommandPwd, CommandExit]
+                CommandPwd, CommandExit, CommandGrep]
     token_types = [TokenInSingleQuotes, TokenInDoubleQuotes, TokenPipe,
                    TokenAssignment, TokenWord]
 

@@ -56,7 +56,7 @@ class CommandInterpreterWithStorage(ICommandInterpreter):
         token = next(tokens, None)
 
         if not token:
-            raise StopIteration()
+            return
 
         if not token.is_possibly_command():
             raise RuntimeError("Unexpected token: " + token.get_value())
