@@ -5,15 +5,17 @@
 from abc import ABCMeta, abstractmethod
 from interpreter import ICommandInterpreter
 from pparser import IParser
+from storage import IStorage
 
 
 class IExecutor(metaclass=ABCMeta):
     """ Интерфейс исполнителя выражений """
 
     def __init__(self, command_interpreter: ICommandInterpreter,
-                 parser: IParser):
+                 parser: IParser, storage: IStorage):
         self._command_interpreter = command_interpreter
         self._parser = parser
+        self._storage = storage
 
     @abstractmethod
     def execute_expression(self, expr: str) -> str:
@@ -30,6 +32,6 @@ class Executor(IExecutor):
 
         result = ""
         for command in commands:
-            result = command.execute(result)
+            result = command.execute(result, self._storage)
 
         return result

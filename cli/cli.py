@@ -35,7 +35,7 @@ def main_loop():
 
     executor = Executor(CommandInterpreterWithStorage
                         (storage, commands, TokenPipe, CommandDefault),
-                        Parser(token_types))
+                        Parser(token_types), storage)
 
     while True:
         try:

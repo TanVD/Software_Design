@@ -5,6 +5,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 from subprocess import run, PIPE
+from storage import IStorage
 
 
 class ICommand(metaclass=ABCMeta):
@@ -21,7 +22,7 @@ class ICommand(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def execute(self, pipe: str) -> str:
+    def execute(self, pipe: str, storage: IStorage) -> str:
         """ Выполнить команду с переданным pipeом
             вернуть результат выполнения """
         pass
@@ -42,7 +43,7 @@ class CommandCat(ICommand):
     def name() -> str:
         return "cat"
 
-    def execute(self, pipe: str) -> str:
+    def execute(self, pipe: str, storage: IStorage) -> str:
         if not self._args:
             raise RuntimeError("cat: must specify file names!")
 
@@ -64,7 +65,7 @@ class CommandEcho(ICommand):
     def name() -> str:
         return "echo"
 
-    def execute(self, pipe: str) -> str:
+    def execute(self, pipe: str, storage: IStorage) -> str:
         return ' '.join(map(str, self._args))
 
 
@@ -75,7 +76,7 @@ class CommandWC(ICommand):
     def name() -> str:
         return "wc"
 
-    def execute(self, pipe: str) -> str:
+    def execute(self, pipe: str, storage: IStorage) -> str:
         result = ""
         if pipe:
             result += "%d %d %d\n" % (pipe.count('\n') + 1,
@@ -105,7 +106,7 @@ class CommandPwd(ICommand):
     def name() -> str:
         return "pwd"
 
-    def execute(self, pipe: str) -> str:
+    def execute(self, pipe: str, storage: IStorage) -> str:
         return os.getcwd()
 
 
@@ -116,7 +117,7 @@ class CommandExit(ICommand):
     def name() -> str:
         return "exit"
 
-    def execute(self, pipe: str) -> str:
+    def execute(self, pipe: str, storage: IStorage) -> str:
         quit(0)
         return ""
 
@@ -128,7 +129,7 @@ class CommandDefault(ICommand):
     def name() -> str:
         return ""
 
-    def execute(self, pipe: str) -> str:
+    def execute(self, pipe: str, storage: IStorage) -> str:
         process = run(self._args, stdout=PIPE, input=pipe,
                       shell=True, encoding="utf8", errors='ignore')
         return process.stdout
