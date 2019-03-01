@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from commands import CommandEcho
-from storage import Storage
+from src.commands import CommandEcho
+from src.storage import Storage
 
 
 class TestCommandEcho(TestCase):

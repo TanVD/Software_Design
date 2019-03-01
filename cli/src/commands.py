@@ -6,7 +6,7 @@ import re
 from abc import ABCMeta, abstractmethod
 from typing import List
 from subprocess import run, PIPE
-from storage import IStorage
+from src.storage import IStorage
 import argparse
 
 

@@ -9,14 +9,14 @@
 
 import os
 from subprocess import run, PIPE
-from storage import Storage
-from commands import CommandCat, CommandEcho, CommandWC, CommandPwd, \
+from src.storage import Storage
+from src.commands import CommandCat, CommandEcho, CommandWC, CommandPwd, \
     CommandExit, CommandDefault, CommandGrep
-from tokens import TokenInSingleQuotes, TokenInDoubleQuotes, TokenPipe, \
+from src.tokens import TokenInSingleQuotes, TokenInDoubleQuotes, TokenPipe, \
     TokenAssignment, TokenWord
-from interpreter import CommandInterpreterWithStorage
-from pparser import Parser
-from executor import Executor
+from src.interpreter import CommandInterpreterWithStorage
+from src.pparser import Parser
+from src.executor import Executor
 
 
 def main_loop():

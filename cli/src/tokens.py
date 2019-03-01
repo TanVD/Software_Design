@@ -3,7 +3,7 @@
 """
 
 from abc import ABCMeta, abstractmethod
-from storage import IStorage
+from src.storage import IStorage
 
 
 class IToken(metaclass=ABCMeta):

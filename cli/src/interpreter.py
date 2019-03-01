@@ -4,9 +4,9 @@
 
 from abc import ABCMeta, abstractmethod
 from typing import List, Type, Iterator, Generator
-from tokens import IToken
-from commands import ICommand
-from storage import IStorage
+from src.tokens import IToken
+from src.commands import ICommand
+from src.storage import IStorage
 
 
 class ICommandInterpreter(metaclass=ABCMeta):

@@ -1,11 +1,11 @@
 from unittest import TestCase
 
-from commands import CommandCat, CommandExit, CommandEcho, CommandWC, \
+from src.commands import CommandCat, CommandExit, CommandEcho, CommandWC, \
     CommandPwd, CommandDefault
-from interpreter import CommandInterpreterWithStorage
-from pparser import Parser
-from storage import Storage
-from tokens import TokenInSingleQuotes, TokenInDoubleQuotes, TokenPipe, \
+from src.interpreter import CommandInterpreterWithStorage
+from src.pparser import Parser
+from src.storage import Storage
+from src.tokens import TokenInSingleQuotes, TokenInDoubleQuotes, TokenPipe, \
     TokenAssignment, TokenWord
 
 

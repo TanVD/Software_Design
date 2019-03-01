@@ -3,9 +3,9 @@
 """
 
 from abc import ABCMeta, abstractmethod
-from interpreter import ICommandInterpreter
-from pparser import IParser
-from storage import IStorage
+from src.interpreter import ICommandInterpreter
+from src.pparser import IParser
+from src.storage import IStorage
 
 
 class IExecutor(metaclass=ABCMeta):

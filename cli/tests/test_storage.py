@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from storage import Storage
+from src.storage import Storage
 
 
 class TestStorage(TestCase):

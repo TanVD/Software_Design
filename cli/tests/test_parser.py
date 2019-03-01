@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from pparser import Parser
-from tokens import TokenInSingleQuotes, TokenInDoubleQuotes, TokenPipe, \
+from src.pparser import Parser
+from src.tokens import TokenInSingleQuotes, TokenInDoubleQuotes, TokenPipe, \
     TokenAssignment, TokenWord
 
 

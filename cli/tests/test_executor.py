@@ -1,13 +1,13 @@
 from unittest import TestCase
 
-from storage import Storage
-from commands import CommandCat, CommandEcho, CommandWC, CommandPwd, \
+from src.storage import Storage
+from src.commands import CommandCat, CommandEcho, CommandWC, CommandPwd, \
     CommandExit, CommandDefault
-from tokens import TokenInSingleQuotes, TokenInDoubleQuotes, TokenPipe, \
+from src.tokens import TokenInSingleQuotes, TokenInDoubleQuotes, TokenPipe, \
     TokenAssignment, TokenWord
-from interpreter import CommandInterpreterWithStorage
-from pparser import Parser
-from executor import Executor
+from src.interpreter import CommandInterpreterWithStorage
+from src.pparser import Parser
+from src.executor import Executor
 
 
 class TestExecutor(TestCase):
@@ -25,7 +25,7 @@ class TestExecutor(TestCase):
         self.assertEqual(executor.execute_expression('echo "Hello, world!"'),
                          'Hello, world!')
 
-        self.assertEqual(executor.execute_expression('FILE=../example.txt'), '')
+        self.assertEqual(executor.execute_expression('FILE=example.txt'), '')
 
         self.assertEqual(executor.execute_expression('cat $FILE'),
                          'Some example text')

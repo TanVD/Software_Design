@@ -7,7 +7,7 @@ import itertools
 import copy
 import re
 from typing import List, Type, Iterator
-from tokens import IToken
+from src.tokens import IToken
 
 
 class IParser(metaclass=ABCMeta):
