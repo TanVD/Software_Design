@@ -4,6 +4,7 @@
 import os
 import re
 from abc import ABCMeta, abstractmethod
+from pathlib import Path
 from typing import List
 from subprocess import run, PIPE
 from src.storage import IStorage
@@ -110,6 +111,47 @@ class CommandPwd(ICommand):
 
     def execute(self, pipe: str, storage: IStorage) -> str:
         return os.getcwd()
+
+
+class CommandCd(ICommand):
+    """ Изменить текущую папку """
+
+    @staticmethod
+    def name() -> str:
+        return "cd"
+
+    def execute(self, pipe: str, storage: IStorage) -> str:
+        if self._args:
+            if self._args[0].startswith("/"):
+                path = self._args[0]
+            elif self._args[0] == '~':
+                path = str(Path.home())
+            else:
+                path = f'{os.getcwd()}/{self._args[0]}'
+        else:
+            path = str(Path.home())
+        os.chdir(path)
+        return ""
+
+
+class CommandLs(ICommand):
+    """ Вывести содержимое текущей папки """
+
+    @staticmethod
+    def name() -> str:
+        return "ls"
+
+    def execute(self, pipe: str, storage: IStorage) -> str:
+        if self._args:
+            if self._args[0].startswith("/"):
+                path = self._args[0]
+            elif self._args[0] == '~':
+                path = str(Path.home())
+            else:
+                path = f'{os.getcwd()}/{self._args[0]}'
+        else:
+            path = "."
+        return '\n'.join([f for f in os.listdir(path)])
 
 
 class CommandExit(ICommand):
