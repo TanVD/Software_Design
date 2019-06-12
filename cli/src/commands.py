@@ -130,7 +130,10 @@ class CommandCd(ICommand):
                 path = f'{os.getcwd()}/{self._args[0]}'
         else:
             path = str(Path.home())
-        os.chdir(path)
+        try:
+            os.chdir(path)
+        except IOError:
+            return "cd: '%s' No such directory\n" % path
         return ""
 
 
